@@ -6,9 +6,19 @@
                 </div>
                 <input type="text" name="search" id="input_search" placeholder="Find your best job">
                 <div id="menu" class="menu">
-                    <a href="#">Чаты</a>
-                    <a href="#">Отклики</a>
-                    <a href="#">Выйти</a>
+                    <router-link to="/">
+                        <button class="menu-button">
+                            Чаты
+                        </button>
+                    </router-link>
+                    <router-link to="/">
+                        <button class="menu-button">
+                            Отклики
+                        </button>
+                    </router-link>
+                    <button class="menu-button" @click="SignOut">
+                        Выйти
+                    </button>
                 </div>
                 <button>Создать резюме</button>
             </div>
@@ -27,11 +37,34 @@
 <script>
 import logo from '@/image/logo.png'
 import background from '@/image/background.png'
+import axios from 'axios';
 
 export default {
     name: 'Header',
     components:{
         logo
+    },
+    methods: {
+        async SignOut() {
+            try {
+                const response = await axios.post(
+                    'http://localhost:8000/api/auth/token/logout/',
+                    {}, 
+                    {
+                        headers: {
+                            'Authorization': 'token ' + (localStorage.getItem('token'))
+                        }
+                    }
+                )
+                if (response.status == 204) {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('isComp')
+                }
+            } catch (error) {
+                alert(error)
+                console.error(error);
+            }
+        },
     }
 }
 </script>
@@ -69,6 +102,8 @@ export default {
         margin-left: 25px;
     }
 
+    
+
     .top button{
         background-color: #7C3AED;
         color: #F3F4F6;
@@ -78,6 +113,16 @@ export default {
         width: 98px;
         padding: 0;
         margin-left: 27.5px;
+    }
+
+    button.menu-button {
+        color: #71717A;
+        background-color:rgba(255, 255, 255, 0);
+        font-size: 14px;
+        font-family: 'Helvetica', 'Neue';
+        text-decoration: none;
+        cursor: pointer;
+        width: min-content;
     }
 
     #input:focus{

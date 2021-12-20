@@ -15,12 +15,30 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import axios from 'axios'
 
 export default {
   name: 'Head',
+  data() {
+    return {
+      isAuth: false,
+      isComp: false,
+    }
+  },
   components: {
     Header,
     Footer
+  },
+  created() {
+    window.addEventListener('storage', () => {
+      if (localStorage.getItem('token')) {
+        this.isAuth = true
+        this.isComp = localStorage.getItem('isComp')
+      }else {
+        this.isAuth = false
+      }
+    }
+    ) 
   }
 }
 </script>
