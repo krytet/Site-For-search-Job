@@ -1,6 +1,8 @@
+from django import urls
 from django.urls import path, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
+import djoser
 
 
 from .views import (LocationViewSet, SkillViewSet, ProfessionalAreaViewSet,
@@ -21,5 +23,9 @@ router.register('massages', MassageViewSet, basename='massages')
 
 
 urlpatterns = [
+    path('', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    #path('auth/', include('djoser.urls')),
+    #urls('auth/', include('djoser.urls')),
     path('', include(router.urls))
 ]
