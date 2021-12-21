@@ -49,7 +49,7 @@ class ResumeViewSet(ModelViewSet):
     def my(self, request, *args, **kwargs):
         print(request.user)
         resumes = Resume.objects.filter(author=request.user).all()
-        serializer = ResponsesSerializer(resumes, many=True)
+        serializer = ResumeSerializer(resumes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
