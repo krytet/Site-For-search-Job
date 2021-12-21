@@ -48,16 +48,11 @@ export default {
     methods: {
         async ResponseVacanse(event) {
             console.log('click');
-            console.log(this.select);
-            console.log(this.$route);
-            console.log(this.$route.params);
-            console.log(this.$route.params.id);
-            console.log(event);
             try {
                 const response = await axios.post(
                     `http://localhost:8000/api/vacancies/${this.$route.params.id}/response/`,
                     {
-                        'vacancy': this.select
+                        'resume': this.select
                     },
                     {
                         headers: {
@@ -65,7 +60,7 @@ export default {
                         }
                     }
                 )
-                if (response.status == 200) {
+                if (response.status == 201) {
                     this.$emit('update:show', false)
                 } else {
                     console.error('Статус не 200');
@@ -73,8 +68,28 @@ export default {
             } catch (error) {
                 alert(error)
             }
-            
+        },
+        async getMyResume() {
+            console.log('Get My Resume');
+            try {
+                const response = await axios.get(
+                    'http://localhost:8000/api/resumes/my/',
+                    {
+                        headers: {
+                            'Authorization': 'token ' + (localStorage.getItem('token'))
+                        }
+                    }
+                )
+                console.log(response);
+                console.log(response.data);
+                this.resumies = response.data
+            } catch (error) {
+                alert(error)
+            }
         }
+    },
+    mounted() {
+        this.getMyResume()
     }
 }
 </script>
