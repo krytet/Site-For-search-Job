@@ -1,17 +1,23 @@
 <template>
     <div v-if="!isLoading" id="content-detail-jobs" class="content-detail-jobs">
-        <DetailsVacancy :detail='detail' />
+        <DetailsVacancy :detail='detail' v-model:show="dialogVisible" />
+        <DialogWindow :show="dialogVisible">
+            <FormSelectResume v-model:show="dialogVisible" />
+        </DialogWindow>
     </div>
 </template>
 
 <script>
 import DetailsVacancy from '@/components/DetailsVacancy'
+import DialogWindow from '@/components/DialogWindow'
+import FormSelectResume from '@/components/FormSelectResume'
 import axios from 'axios'
 
 export default {
     name: 'VacancyDetails',
     data() {
         return {
+            dialogVisible: false,
             isLoading: true,
             detail: {}/**
                 id_vacancy: 34,
@@ -48,7 +54,7 @@ export default {
         }
     },
     components: {
-        DetailsVacancy
+        DetailsVacancy, DialogWindow, FormSelectResume
     },
     methods: {
         async getVacancy() {
@@ -87,6 +93,9 @@ export default {
         justify-content: center;
         margin-bottom: 15px; 
         margin-top: 30px; 
+    }
 
+    h1 {
+        background-color: rgb(219, 66, 66);
     }
 </style>

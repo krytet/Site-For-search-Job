@@ -25,7 +25,7 @@
         <img src="https://w7.pngwing.com/pngs/179/878/png-transparent-computer-icons-eagle-emblem-animals-logo.png" alt="logo">
         <!--<img :src="detail.image" alt="logo">-->
         <h5> {{ detail.location.name }} </h5>
-        <p><a href="#" class="response-vacancy">Откликнуться</a></p>
+        <button class="response-vacancy" @click="SetVisibleDialog">Откликнуться</button>
         <h3>Условия работы у нас:</h3>
         <div class="requirements-list-for-job">
             <p>Опыт работы: <span> {{ detail.experience.name }} </span></p>
@@ -47,6 +47,15 @@ export default {
         detail: {
             type: Object,
             requred: true
+        },
+        show: {
+            type: Boolean
+        }
+    },
+    methods: {
+        SetVisibleDialog() {
+            console.log('Hi')
+            this.$emit('update:show', true)
         }
     }
 }
@@ -119,13 +128,13 @@ export default {
     
     .response-vacancy {
         background-color: rgb(202, 138, 218);
+        font-size: 16px;
         border: 1px solid #E4E4E7;
         border-radius: 5px;
         text-decoration: none;
         padding: 10px;
         color: black;
         margin: 10px;
-    
     }
     .response-vacancy:hover { 
         text-decoration: none;
