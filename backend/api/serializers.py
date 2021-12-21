@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import fields
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from .models import (Location, Skill, ProfessionalArea, Speciality, Resume,
                      Vacancy, Responses, Chat, Massage, EXPERIANCE, EDUCATION,
                      SCHEDULE, TYPE_EMPLOYMENT, STATUS)
@@ -156,8 +157,8 @@ class VacancySerializer(serializers.ModelSerializer):
 
 
 class ResponsesSerializer(serializers.ModelSerializer):
-    resume = ResumeSerializer()
-    vacancy = VacancySerializer()
+    #resume = ResumeSerializer()
+    #vacancy = VacancySerializer()
 
     class Meta:
         model = Responses
