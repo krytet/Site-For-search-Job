@@ -5,7 +5,7 @@
                     <router-link to="/"><img src="@/image/logo.png" alt="logo"></router-link>
                 </div>
                 <input type="text" name="search" id="input_search" placeholder="Find your best job">
-                <div id="menu" class="menu">
+                <div id="menu" class="menu"  v-if="isAuth">
                     <router-link to="/">
                         <button class="menu-button">
                             Чаты
@@ -20,7 +20,31 @@
                         Выйти
                     </button>
                 </div>
-                <button>Создать резюме</button>
+                <div id="menu" class="menu"  v-else>
+                    <router-link to="/">
+                        <button class="menu-button">
+                            Регистрация
+                        </button>
+                    </router-link>
+                </div>
+                <div v-if="isAuth">
+                    <router-link to="/" v-if="isComp">
+                        <button>
+                            Создать вакансию
+                        </button>
+                    </router-link>
+                    <router-link to="/" v-else>
+                        <button>
+                            Создать резюме
+                        </button>
+                    </router-link>
+                </div>
+                
+                <router-link to="/signin" v-else>
+                    <button>
+                        Войти
+                    </button>
+                </router-link>
             </div>
             <div id="logo" class="logo">
                 <div id="slogan" class="slogan">
@@ -41,6 +65,12 @@ import axios from 'axios';
 
 export default {
     name: 'Header',
+    data() {
+        return {
+            isAuth: false,
+            isComp: false,
+        }
+    },
     components:{
         logo
     },
@@ -65,6 +95,23 @@ export default {
                 console.error(error);
             }
         },
+        AuthCheck() {
+            if (localStorage.getItem('token')) {
+                console.log('есть токен');
+                if(localStorage.getItem('isComp') == 'true') {
+                    this.isComp = true
+                } else {
+                    this.isComp = false
+                }
+                this.isAuth = true
+            } else {
+                console.log('Нет токена');
+                this.isAuth = false
+            }
+        }
+    },
+    mounted() {
+        this.AuthCheck()
     }
 }
 </script>
@@ -113,6 +160,7 @@ export default {
         width: 98px;
         padding: 0;
         margin-left: 27.5px;
+        cursor: pointer;
     }
 
     button.menu-button {

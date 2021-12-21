@@ -79,6 +79,10 @@ export default {
     align-items: center;
 }
 
+.area-form h3 {
+    cursor: default;
+}
+
 .input-area {
     height: 25px;
     text-align: center;
@@ -102,5 +106,6 @@ export default {
     justify-items: center;
     justify-content: center;
     justify-self: center;
+    cursor: pointer;
 }
 </style>
