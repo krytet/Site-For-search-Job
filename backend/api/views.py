@@ -45,8 +45,9 @@ class ResumeViewSet(ModelViewSet):
 
     # Получение списка своих резюме
     @action(methods=['get'], detail=False,
-            permission_classes=permissions.IsAuthenticated)
+            permission_classes=[permissions.IsAuthenticated])
     def my(self, request, *args, **kwargs):
+        print(request.user)
         resumes = Resume.objects.filter(author=request.user).all()
         serializer = ResponsesSerializer(resumes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
