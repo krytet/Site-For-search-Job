@@ -1,14 +1,17 @@
 from django.contrib.auth import get_user_model
+from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from django_filters import rest_framework as filters
 from .filters import VacancyFilter
 from rest_framework.decorators import action, permission_classes
 from rest_framework import permissions, status
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 
 
 from .models import (Location, Skill, ProfessionalArea, Speciality, Resume,
-                     Vacancy, Responses, Chat, Massage)
+                     Vacancy, Responses, Chat, Massage, EXPERIANCE, EDUCATION,
+                     SCHEDULE, TYPE_EMPLOYMENT, STATUS)
 from .serializers import (LocationSerializer, SkillSerializer,
                           ProfessionalAreaSerializer, SpecialitySerializer,
                           ResumeSerializer,VacancySerializer,
@@ -16,7 +19,53 @@ from .serializers import (LocationSerializer, SkillSerializer,
                           )
 
 
-USer = get_user_model()
+User = get_user_model()
+
+
+def create_dict(value, name, items = []):
+    dict_prams = {
+        'value': value,
+        'name': name,
+        'items': []
+    }
+    for item in items:
+        dict_prams['items'].append(
+            {
+                'id': item[0],
+                'name': item[1],
+            }
+        )
+    return dict_prams
+
+
+class FilterParams(ListAPIView):
+
+    def get(self, request, *args, **kwargs):
+        params = {
+            'radio': [],
+            'switch': []
+        }
+        print(params)
+        create_dict('expir', 'опыт', EXPERIANCE)
+        params['radio'].append(
+            create_dict('experience', 'Опыт работы', EXPERIANCE)
+        )
+        params['radio'].append(
+            create_dict('education', 'Образование', EDUCATION)
+        )
+        params['radio'].append(
+            create_dict('work_schedule', 'График работы', SCHEDULE)
+        )
+        params['radio'].append(
+            create_dict('type_employment', 'Тип занятости', TYPE_EMPLOYMENT)
+        )
+        params['switch'].append(
+            create_dict('remote_work', 'Удаленная работа')
+        )
+
+        print(params)
+        return Response(params)
+
 
 
 class LocationViewSet(ModelViewSet):
