@@ -27,7 +27,7 @@ export default {
                 remote_work: null,
                 disability: null,
             },
-            filters_elements: {
+            filters_elements: {}, /**
                 radio :{
                     experience: {
                         value: 'experience',
@@ -108,7 +108,7 @@ export default {
                         name: 'Удаленная работа',
                     },
                 }
-            },
+            }, */
             vacancies: [], /**
                 {
                     id: 23,
@@ -177,6 +177,16 @@ export default {
                 console.error(e);
             }
         },
+        async getFilterParams() {
+            try {
+                const response = await axios.get('http://localhost:8000/api/filter-params/')
+                console.log('Filter Params');
+                console.log(response);
+                this.filters_elements = response.data
+            } catch (error) {
+                alert(error)
+            }
+        },
         async getVacancy(
             experience = null,
             type_employment = null,
@@ -228,7 +238,8 @@ export default {
             this.filtersParams.education,
             this.filtersParams.remote_work,
             this.selectedSort,
-        ) 
+        )
+        this.getFilterParams()
     },
     watch: {
         selectedSort(newParams) {
