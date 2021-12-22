@@ -151,7 +151,7 @@ export default {
         async getResponses() {
             console.log('отправил запрос');
             try {
-                const response = await axios.get('http://localhost:8000/api/responses/',
+                const response = await axios.get('http://localhost:8000/api/responses/my/',
                     {
                         headers: {
                             'Authorization': 'token ' + (localStorage.getItem('token'))
@@ -160,6 +160,9 @@ export default {
                 )
                 console.log('Hi git me responses');
                 console.log(response);
+                console.log(response.data.results);
+                this.responses = response.data.results
+
             } catch (error) {
                 
             }

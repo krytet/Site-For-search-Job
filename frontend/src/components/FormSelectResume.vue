@@ -65,7 +65,7 @@ export default {
             if (this.response) {
                 var url = `http://localhost:8000/api/responses/${this.response}/`
                 var dataPost = {
-                    'resume': this.resume,
+                    'resume': this.select,
                     'vacancy': this.vacancy,
                 }
             } else {
