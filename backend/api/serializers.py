@@ -159,10 +159,22 @@ class VacancySerializer(serializers.ModelSerializer):
 class ShowResponsesSerializer(serializers.ModelSerializer):
     resume = ResumeSerializer()
     vacancy = VacancySerializer()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = Responses
         fields = '__all__'
+
+    def get_status(self, obj):
+        result = {
+            'id': obj.status,
+            'name': ''
+        }
+        for item in STATUS:
+            if item[0] == result['id']:
+                result['name'] = item[1]
+                break
+        return result
 
 
 class ResponsesSerializer(serializers.ModelSerializer):

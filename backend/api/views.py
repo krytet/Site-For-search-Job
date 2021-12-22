@@ -124,7 +124,7 @@ class ResponsesViewSet(ModelViewSet):
     @action(detail=False, methods=['get'],
             permission_classes=[permissions.IsAuthenticated])
     def my(self, request, *args, **kwargs):
-        responses = Responses.objects.filter(resume__author=request.user).all()
+        responses = Responses.objects.filter(resume__author=request.user).order_by('-id').all()
         queryset = self.filter_queryset(responses)
 
         page = self.paginate_queryset(queryset)
