@@ -1,8 +1,13 @@
 <template>
     <div v-if="!isLoading" id="content-detail-jobs" class="content-detail-jobs">
         <DetailsVacancy :detail='detail' v-model:show="dialogVisible" />
-        <DialogWindow :show="dialogVisible">
-            <FormSelectResume v-model:show="dialogVisible" />
+        <DialogWindow v-model:show="dialogVisible">
+            <h1> {{$route.params.id}} </h1>
+            <FormSelectResume 
+                v-model:show="dialogVisible" 
+                v-model:select="selectResume" 
+                :vacancy="$route.params.id"
+            />
         </DialogWindow>
     </div>
 </template>
@@ -18,6 +23,7 @@ export default {
     data() {
         return {
             dialogVisible: false,
+            selectResume: 0,
             isLoading: true,
             detail: {}/**
                 id_vacancy: 34,
@@ -77,6 +83,8 @@ export default {
     },
     mounted() {
         this.getVacancy()
+        console.error('!!!!! Проверка');
+        console.error(this.$route.params.id);
     }
 }
 </script>

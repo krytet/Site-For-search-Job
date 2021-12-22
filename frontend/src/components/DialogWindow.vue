@@ -1,5 +1,5 @@
 <template>
-    <div class="gray-bg-color" v-if="show">
+    <div class="gray-bg-color" v-if="show" @dblclick="setInVisibilyte" >
         <slot></slot>
     </div>
 </template>
@@ -10,6 +10,11 @@ export default {
     props: {
         show: {
             type: Boolean
+        }
+    },
+    methods: {
+        setInVisibilyte() {
+            this.$emit('update:show', false)
         }
     }
 }

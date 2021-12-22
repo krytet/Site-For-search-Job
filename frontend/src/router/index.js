@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Vacancy from '../views/Vacancy.vue'
 import VacancyDetail from '@/views/VacancyDetail.vue'
 import SingIn from '@/views/SingIn.vue'
+import Responses from '@/views/Responses.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/vacancy/:id',
     name: 'Vacancy-Detail',
     component: VacancyDetail
+  },
+  {
+    path: '/responses',
+    name: 'Responses',
+    component: Responses
   },
   {
     path: '/about',

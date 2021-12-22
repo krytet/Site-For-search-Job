@@ -11,7 +11,7 @@
                             Чаты
                         </button>
                     </router-link>
-                    <router-link to="/">
+                    <router-link to="/responses">
                         <button class="menu-button">
                             Отклики
                         </button>

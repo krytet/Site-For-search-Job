@@ -20,8 +20,8 @@ export default {
     name: 'FormSelectResume',
     data() {
         return {
-            select: 0,
-            resumies: [
+            //select: 0,
+            resumies: []/**
                 {
                     id: 43,
                     name: 'Разработчик'
@@ -34,43 +34,76 @@ export default {
                     id: 443,
                     name: 'Backend'
                 },
-            ]
+            ]*/
         }
     },
     components: {
         CardResume, RadioButton
     },
     props: {
+        vacancy: {
+            type: Number
+        },
+        select: {
+            default: 0,
+            type: Number,
+        },
         show: {
             type: Boolean
+        },
+        response: {
+            type:Number
         }
     },
     methods: {
         async ResponseVacanse(event) {
-            console.log('click');
+            var paramsHeader = {
+                headers: {
+                    'Authorization': 'token ' + (localStorage.getItem('token'))
+                }
+            }
+            if (this.response) {
+                var url = `http://localhost:8000/api/responses/${this.response}/`
+                var dataPost = {
+                    'resume': this.resume,
+                    'vacancy': this.vacancy,
+                }
+            } else {
+                var url = `http://localhost:8000/api/vacancies/${this.vacancy}/response/`
+                var dataPost = {
+                    'resume': this.select
+                }
+            }
             try {
-                const response = await axios.post(
-                    `http://localhost:8000/api/vacancies/${this.$route.params.id}/response/`,
-                    {
-                        'resume': this.select
-                    },
-                    {
-                        headers: {
-                            'Authorization': 'token ' + (localStorage.getItem('token'))
-                        }
-                    }
-                )
-                if (response.status == 201) {
-                    this.$emit('update:show', false)
+                if (this.response) {
+                    var response = await axios.put(url, dataPost, paramsHeader) //TODO проверить
                 } else {
-                    console.error('Статус не 200');
+                    var response = await axios.post(url, dataPost, paramsHeader)
+                }
+                //const response = await axios.post(
+                //    //`http://localhost:8000/api/vacancies/${this.vacancy}/response/`,
+                //    url,
+                //    dataPost,
+                //    //{
+                //    //    'resume': this.select
+                //    //},
+                //    {
+                //        headers: {
+                //            'Authorization': 'token ' + (localStorage.getItem('token'))
+                //        }
+                //    }
+                //)
+                if (response.status < 400) {
+                    this.$emit('update:show', false)
+                    this.$emit('update:select', this.select)
+                } else {
+                    console.error('Статус не 201');
                 }
             } catch (error) {
                 alert(error)
             }
         },
         async getMyResume() {
-            console.log('Get My Resume');
             try {
                 const response = await axios.get(
                     'http://localhost:8000/api/resumes/my/',
@@ -80,8 +113,6 @@ export default {
                         }
                     }
                 )
-                console.log(response);
-                console.log(response.data);
                 this.resumies = response.data
             } catch (error) {
                 alert(error)
