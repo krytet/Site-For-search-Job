@@ -43,10 +43,8 @@ class FilterParams(ListAPIView):
     def get(self, request, *args, **kwargs):
         params = {
             'radio': [],
-            'switch': []
+            'switch_elements': []
         }
-        print(params)
-        create_dict('expir', 'опыт', EXPERIANCE)
         params['radio'].append(
             create_dict('experience', 'Опыт работы', EXPERIANCE)
         )
@@ -59,11 +57,9 @@ class FilterParams(ListAPIView):
         params['radio'].append(
             create_dict('type_employment', 'Тип занятости', TYPE_EMPLOYMENT)
         )
-        params['switch'].append(
+        params['switch_elements'].append(
             create_dict('remote_work', 'Удаленная работа')
         )
-
-        print(params)
         return Response(params)
 
 
