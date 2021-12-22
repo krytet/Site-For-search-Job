@@ -156,6 +156,15 @@ class VacancySerializer(serializers.ModelSerializer):
         return OrderedDict(fields.data)
 
 
+class ShowResponsesSerializer(serializers.ModelSerializer):
+    resume = ResumeSerializer()
+    vacancy = VacancySerializer()
+
+    class Meta:
+        model = Responses
+        fields = '__all__'
+
+
 class ResponsesSerializer(serializers.ModelSerializer):
     #resume = ResumeSerializer()
     #vacancy = VacancySerializer()
@@ -163,6 +172,10 @@ class ResponsesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Responses
         fields = '__all__'
+
+    def to_representation(self, data):
+        fields = ShowResponsesSerializer(data, context=self.context)
+        return OrderedDict(fields.data)
 
 
 class MassageSerializer(serializers.ModelSerializer):

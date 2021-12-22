@@ -121,6 +121,21 @@ class ResponsesViewSet(ModelViewSet):
     queryset = Responses.objects.all()
     serializer_class = ResponsesSerializer
 
+    @action(detail=False, methods=['get'],
+            permission_classes=[permissions.IsAuthenticated])
+    def my(self, request, *args, **kwargs):
+        responses = Responses.objects.filter(resume__author=request.user).all()
+        queryset = self.filter_queryset(responses)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 
 class ChatViewSet(ModelViewSet):
     queryset = Chat.objects.all()
