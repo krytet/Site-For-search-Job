@@ -1,7 +1,6 @@
 <template>
     <div id="left_sidebar" class="left_sidebar">
         <h5>Фильтр</h5>
-        <h2 > {{ modelValue.experience }} </h2> <!-- TODO сделать динамичным -->
         <div v-for="radio in filters_elements.radio" :key="radio.value">
             <h5> {{ radio.name }} </h5>
             <RadioButton 

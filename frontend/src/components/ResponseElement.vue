@@ -1,5 +1,5 @@
 <template>
-    <div class="card-response">
+    <div v-if="isExist" class="card-response">
         <div class="status-and-resume">
             <h3 v-if="response.status.id <= 2" style="color: #71717A"> {{response.status.name}}</h3>
             <h3 v-if="response.status.id == 3" style="color: green"> {{response.status.name}}</h3>
@@ -9,7 +9,7 @@
                 <button @click="setVisibilyteResume(response.id, response.resume.id, response.vacancy.id)">
                     <img src="@/image/edit.png" alt="edit">
                 </button>
-                <button >
+                <button @click="deleteRespose(response.id)">
                     <img src="@/image/delete.png" alt="delete">
                 </button>
             </div>
@@ -29,8 +29,14 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'ResponseElement',
+    data() {
+        return {
+            isExist: true
+        }
+    },
     props: {
         watchResponse: {
             type: Number
@@ -56,6 +62,22 @@ export default {
             this.$emit('update:watchResponse', idResponse)
             this.$emit('update:watchResponseSelect', idResume)
             this.$emit('update:watchResponseVacancy', idVacancy)
+        },
+        async deleteRespose(idResponse) {
+            console.log(idResponse)
+            try {
+                const response = await axios.delete(
+                    `http://localhost:8000/api/responses/${idResponse}/`,
+                    {
+                        headers: {
+                            'Authorization': 'token ' + (localStorage.getItem('token'))
+                        }
+                    }
+                )
+                this.isExist = false
+            } catch (error) {
+                alert(error)
+            }
         }
     }
 }

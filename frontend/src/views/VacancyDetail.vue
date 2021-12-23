@@ -10,12 +10,14 @@
             />
         </DialogWindow>
     </div>
+    <LoadingSpiner v-else />
 </template>
 
 <script>
 import DetailsVacancy from '@/components/DetailsVacancy'
 import DialogWindow from '@/components/DialogWindow'
 import FormSelectResume from '@/components/FormSelectResume'
+import LoadingSpiner from '@/components/elements/LoadingSpiner'
 import axios from 'axios'
 
 export default {
@@ -60,7 +62,7 @@ export default {
         }
     },
     components: {
-        DetailsVacancy, DialogWindow, FormSelectResume
+        DetailsVacancy, DialogWindow, FormSelectResume, LoadingSpiner
     },
     methods: {
         async getVacancy() {

@@ -2,13 +2,15 @@
     <div class="area-reponses">
         <h1>Список откликов</h1>
         <div>
-            <span> Когда нибудь здесь будет сортировка, но опка только это : </span>
+            <span> Когда нибудь здесь будет сортировка, но пока только это : </span>
             <button>Все отклики</button>
             <button>Приглашения</button>
         </div>
         <hr>
         <div class="responses-list">
+            <LoadingSpiner v-if="isLoading" />
             <ResponseElement 
+                v-else
                 v-for="response in responses" 
                 :key="response.id" 
                 :response='response' 
@@ -33,19 +35,21 @@
 import ResponseElement from '@/components/ResponseElement'
 import DialogWindow from '@/components/DialogWindow'
 import FormSelectResume from '@/components/FormSelectResume'
+import LoadingSpiner from '@/components/elements/LoadingSpiner'
 import axios from 'axios'
 
 export default {
     name: 'Responses',
     data() {
         return {
+            isLoading: false,
             dialogVisible: false,
             watchResponse: {
                 response: Number,
                 vacancy: Number,
                 resume: Number
             },
-            responses: [
+            responses: [],/**
                 {
                     id: 1111111111111111,
                     resume: {
@@ -141,14 +145,15 @@ export default {
                         name: 'В архиве'
                     }
                 },
-            ]
+            ] */
         }
     },
     components: {
-        ResponseElement, DialogWindow, FormSelectResume
+        ResponseElement, DialogWindow, FormSelectResume, LoadingSpiner
     },
     methods: {
         async getResponses() {
+            this.isLoading = true
             console.log('отправил запрос');
             try {
                 const response = await axios.get('http://localhost:8000/api/responses/my/',
@@ -164,8 +169,9 @@ export default {
                 this.responses = response.data.results
 
             } catch (error) {
-                
+                alert(error)
             }
+            this.isLoading = false
         }
     },
     mounted() {

@@ -1,8 +1,10 @@
 <template>
+    <LoadingSpiner v-if="isLoadingFilter && isLoadingVacancy"/>
     <div class="content">
         <Filter v-model="filtersParams" :filters_elements='filters_elements' @change="ChangeFilter" />
         <ListVacancy v-model="selectedSort" :vacancies='vacancies' />
         <RightTopCompany :top_companies="top_companies" />
+        
 
     </div>
 </template>
@@ -11,6 +13,7 @@
 import Filter from '@/components/Filter'
 import ListVacancy from '@/components/ListVacancy'
 import RightTopCompany from '@/components/RightTopCompany'
+import LoadingSpiner from '@/components/elements/LoadingSpiner'
 import axios from "axios"
 import { vacancyListApi } from '@/api/index'
 
@@ -18,6 +21,8 @@ export default {
     name: 'VacancyList',
     data() {
         return {
+            isLoadingFilter: false,
+            isLoadingVacancy: false,
             selectedSort: null,
             filtersParams: {
                 experience: null,
@@ -167,6 +172,7 @@ export default {
         Filter,
         ListVacancy,
         RightTopCompany,
+        LoadingSpiner,
     },
     methods: {
         async getPost () {
@@ -178,6 +184,7 @@ export default {
             }
         },
         async getFilterParams() {
+            this.isLoadingFilter = true
             try {
                 const response = await axios.get('http://localhost:8000/api/filter-params/')
                 console.log('Filter Params');
@@ -186,6 +193,7 @@ export default {
             } catch (error) {
                 alert(error)
             }
+            this.isLoadingFilter = false
         },
         async getVacancy(
             experience = null,
@@ -195,6 +203,7 @@ export default {
             remote_work = null,
             sort = null
         ) {
+            this.isLoadingVacancy = true
             try{
                 const response = await axios.get('http://localhost:8000/api/vacancies/', {
                     params: {
@@ -218,6 +227,7 @@ export default {
                 console.error('Ошибка');
                 console.error(error)
             }
+            this.isLoadingVacancy = true
         },
         ChangeFilter(event) {
             this.getVacancy(
