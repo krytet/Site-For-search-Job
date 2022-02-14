@@ -7,10 +7,12 @@ import djoser
 
 from .views import (LocationViewSet, SkillViewSet, ProfessionalAreaViewSet,
                     SpecialityViewSet, ResumeViewSet, VacancyViewSet,
-                    ResponsesViewSet, ChatViewSet, MassageViewSet, FilterParams
+                    ResponsesViewSet, ChatViewSet, MassageViewSet,
+                    FilterParams, UserViewSet
                     )
 
 router = DefaultRouter()
+router.register('users', UserViewSet, basename='users')
 router.register('locations', LocationViewSet, basename='locations')
 router.register('skills', SkillViewSet, basename='skills')
 router.register('prof-areas', ProfessionalAreaViewSet, basename='prof-areas')
@@ -23,10 +25,7 @@ router.register('massages', MassageViewSet, basename='massages')
 
 
 urlpatterns = [
-    path('', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
     path('filter-params/', FilterParams.as_view()),
-    #path('auth/', include('djoser.urls')),
-    #urls('auth/', include('djoser.urls')),
     path('', include(router.urls))
 ]

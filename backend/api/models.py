@@ -50,7 +50,7 @@ class Location(models.Model):
         verbose_name_plural = 'Местоположение'
     
     def __str__(self):
-        return self.name
+        return f"{self.pk} {self.name}"
         
 
 class Skill(models.Model):
@@ -126,9 +126,12 @@ class Resume(models.Model):
 
 
 class Vacancy(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vacancy',
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               related_name='vacancy',
                                verbose_name='Автор вакансии')
     name = models.CharField(max_length=255, verbose_name='Название вакансии')
+    short_discription = models.CharField(max_length=255, blank=True,
+                                         verbose_name='Короткое описание')
     discription = models.TextField(verbose_name='Описание вакансии')
     location = models.ForeignKey(
         Location, on_delete=models.PROTECT, related_name='vacancy',

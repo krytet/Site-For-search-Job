@@ -17,6 +17,7 @@ from .serializers import (LocationSerializer, SkillSerializer,
                           ResumeSerializer,VacancySerializer,
                           ResponsesSerializer, ChatSerializer, MassageSerializer
                           )
+from users.serializers import CustomUserSerializer
 
 
 User = get_user_model()
@@ -63,10 +64,23 @@ class FilterParams(ListAPIView):
         return Response(params)
 
 
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = CustomUserSerializer
+
+    # TODO предлеать результат для вывода значения при авторизации
+    @action(methods=['GET'], detail=False)
+    def me(self, request, *args, **kwargs):
+        instance = request.user
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
 
 class LocationViewSet(ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    # TODO Настроить фронт под поиск
+    pagination_class = None
 
 
 class SkillViewSet(ModelViewSet):
@@ -82,6 +96,8 @@ class ProfessionalAreaViewSet(ModelViewSet):
 class SpecialityViewSet(ModelViewSet):
     queryset = Speciality.objects.all()
     serializer_class = SpecialitySerializer
+    # TODO Настроить фронт под поиск
+    pagination_class = None
 
 
 class ResumeViewSet(ModelViewSet):
@@ -103,6 +119,9 @@ class VacancyViewSet(ModelViewSet):
     serializer_class = VacancySerializer
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = VacancyFilter
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
     @action(detail=True, methods=['post'],
             permission_classes=[permissions.IsAuthenticated])
