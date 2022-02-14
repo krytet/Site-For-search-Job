@@ -2,7 +2,7 @@
     <LoadingSpiner v-if="isLoadingFilter && isLoadingVacancy"/>
     <div class="content">
         <Filter v-model="filtersParams" :filters_elements='filters_elements' @change="ChangeFilter" />
-        <ListVacancy v-model="selectedSort" :vacancies='vacancies' />
+        <ListVacancy v-model="selectedSort" :vacancies='vacancies' :vacanciesCount='vacanciesCount' />
         <RightTopCompany :top_companies="top_companies" />
         
 
@@ -114,6 +114,7 @@ export default {
                     },
                 }
             }, */
+            vacanciesCount : Number,
             vacancies: [], /**
                 {
                     id: 23,
@@ -220,7 +221,7 @@ export default {
                 console.log(response)
                 console.log(response.data)
                 console.log(response.data.results)
-                
+                this.vacanciesCount = response.data.count
                 this.vacancies = response.data.results
             } catch(error) {
                 alert(error)

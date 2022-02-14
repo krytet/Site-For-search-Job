@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Vacancy from '../views/Vacancy.vue'
 import VacancyDetail from '@/views/VacancyDetail.vue'
+import VacancyCreate from '@/views/VacancyCreate.vue'
+import SingUp from '@/views/SingUp.vue'
 import SingIn from '@/views/SingIn.vue'
 import Responses from '@/views/Responses.vue'
 
@@ -12,6 +14,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/signup',
+    name: 'SignUp',
+    component: SingUp
+  },
+  {
     path: '/signin',
     name: 'SignIn',
     component: SingIn
@@ -20,6 +27,11 @@ const routes = [
     path: '/vacancy',
     name: 'Vacancy',
     component: Vacancy
+  },
+  {
+    path: '/vacancy/create',
+    name: 'VacancyCreate',
+    component: VacancyCreate
   },
   {
     path: '/vacancy/:id',

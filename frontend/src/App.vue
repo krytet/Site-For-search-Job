@@ -5,7 +5,9 @@
     <router-link to="/about">About</router-link> |
     <router-link to="/vacancy">Vacancy</router-link> |
     <router-link to="/vacancy/5">Vacancy-detail</router-link> |
-    <router-link to="/signin/">Sign In</router-link> |
+    <router-link to="/signin">Sign In</router-link> |
+    <router-link to="/signup">Sign Up Reg</router-link> |
+    <router-link to="/vacancy/create">Vacancy Create</router-link> |
     <router-link to="/responses">Responses</router-link> |
   </div>
   <router-view/>

@@ -21,14 +21,14 @@
                     </button>
                 </div>
                 <div id="menu" class="menu"  v-else>
-                    <router-link to="/">
+                    <router-link to="/signup">
                         <button class="menu-button">
                             Регистрация
                         </button>
                     </router-link>
                 </div>
                 <div v-if="isAuth">
-                    <router-link to="/" v-if="isComp">
+                    <router-link to="/vacancy/create" v-if="isComp">
                         <button>
                             Создать вакансию
                         </button>
@@ -170,7 +170,15 @@ export default {
         font-family: 'Helvetica', 'Neue';
         text-decoration: none;
         cursor: pointer;
+        height: 20px;
         width: min-content;
+        transition: 0.5s;
+    }
+
+    button.menu-button:hover {
+        background-color: #7c3aed80;
+        height: 25px;
+        transition: 0.5s;
     }
 
     #input:focus{

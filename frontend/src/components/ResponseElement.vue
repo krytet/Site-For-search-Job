@@ -2,8 +2,8 @@
     <div v-if="isExist" class="card-response">
         <div class="status-and-resume">
             <h3 v-if="response.status.id <= 2" style="color: #71717A"> {{response.status.name}}</h3>
-            <h3 v-if="response.status.id == 3" style="color: green"> {{response.status.name}}</h3>
-            <h3 v-if="response.status.id == 4" style="color: red"> {{response.status.name}}</h3>
+            <h3 v-if="response.status.id == 4" style="color: green"> {{response.status.name}}</h3>
+            <h3 v-if="response.status.id == 3" style="color: red"> {{response.status.name}}</h3>
             <h3 v-if="response.status.id == 5" style="color: blue"> {{response.status.name}}</h3>
             <div v-if="response.status.id == 1">
                 <button @click="setVisibilyteResume(response.id, response.resume.id, response.vacancy.id)">

@@ -13,6 +13,7 @@
             </div>
         </div>
         <div id="jobs_list" class="jobs_list" v-if="vacancies.length > 0">
+            <h6 class="count-vacancy"> Найдено {{ vacanciesCount }} вакансий </h6>
             <VacancyItem v-for="vacancy in vacancies" :vacancy="vacancy" :key="vacancy.id" />
         </div>
     </div>
@@ -42,6 +43,9 @@ export default {
         vacancies: {
             type: Array,
             requred: true
+        },
+        vacanciesCount: {
+            type: Number
         }
     },
     components: {
@@ -88,5 +92,12 @@ export default {
     
     .sort {
         color: #71717A;
+    }
+
+    .count-vacancy {
+        font-size: 12px;
+        color: #71717A;
+        margin: 4px auto;
+        text-align: center;
     }
 </style>

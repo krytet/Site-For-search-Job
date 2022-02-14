@@ -1,18 +1,19 @@
 <template>
     <label class="radio_select">
-        <input type="radio" :name="tag" class="redio_select" v-model="modelValue" :value="item.id" @change="AddParamsToFilter">
+        <input type="radio" :name="tag" class="redio_select" v-model="modelValue" :value="item.isComp" @change="SelectType">
         <span class="fake"></span>
-        <span> {{ item.name }} </span>
+        <!-- TODO Настроить заливание рамки  -->
+        <span class="text-design"> {{ item.name }} </span>
     </label>
 </template>
 
 <script>
 export default {
-    name: 'RadioButton',
+    name: 'BigRadioButton',
     props: {
         modelValue: {
-            //type: String
-            type: Number
+            /**type: String*/
+            type: Boolean
         },
         tag : {
             type: String
@@ -22,7 +23,7 @@ export default {
         }
     },
     methods: {
-        AddParamsToFilter(event) {
+        SelectType(event) {
 
             console.log('event.target.value')
             console.log('value' ,event.target.value)
@@ -31,7 +32,7 @@ export default {
             this.$emit('update:modelValue', event.target.value)
             
         }
-    }, 
+    }
 }
 </script>
 
@@ -41,7 +42,6 @@ export default {
         grid-template-columns: 16px auto;
         grid-column-gap: 8px;
         text-align: left;
-        color: #71717A;
         font-size: 14px;
         padding-bottom: 12px;
     }
@@ -79,7 +79,27 @@ export default {
         opacity: 0;
     }
 
-    .redio_select:checked + .fake::before {
+    input.redio_select:checked + .fake::before {
         opacity: 1;
     }
+
+    span.text-design {
+        padding: 5px;
+        border: 1px solid #A1A1AA;
+        border-radius: 5px;
+        color: black;
+        display: block;
+        
+    }
+
+    span.text-design:hover {
+        background-color: #7c3aed50;
+        transition: 0.4s;
+    }
+
+    input.redio_select:checked + span.text-design {
+        color: rgb(255, 0, 0);
+        background-color: #7C3AED;
+    }
+
 </style>

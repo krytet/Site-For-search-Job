@@ -1,6 +1,6 @@
 <template>
     <label class="select_bolean">
-        <input type="checkbox" :name="element.value" class="checkbox_bolean">
+        <input type="checkbox" :name="element.value" class="checkbox_bolean" v-model="modelValue" @change="AddParamsToFilter">
         <span class="check_bolean"></span>
         <span class="text"> {{ element.name }} </span>
     </label>
@@ -10,8 +10,16 @@
 export default {
     name: 'Switch',
     props: {
+        modelValue: {
+            type: Boolean
+        },
         element: {
             type: Object
+        }
+    },
+    methods: {
+        AddParamsToFilter(event) {
+            this.$emit('update:modelValue', this.modelValue)
         }
     }
 
