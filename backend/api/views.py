@@ -104,6 +104,9 @@ class ResumeViewSet(ModelViewSet):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
     # Получение списка своих резюме
     @action(methods=['get'], detail=False,
             permission_classes=[permissions.IsAuthenticated])

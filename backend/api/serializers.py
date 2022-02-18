@@ -106,7 +106,9 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Resume
-        fields = '__all__'
+        fields = ['name', 'location', 'skills', 'speciality', 'experience',
+                  'education', 'type_employment', 'work_schedule', 'salary',
+                  'remote_work', 'about_me']
     
     def validate_skills(self, data):
         for num_skill in range(len(data)):
