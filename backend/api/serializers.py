@@ -93,11 +93,25 @@ class ShowResumeSerializer(serializers.ModelSerializer):
 
 
 class ResumeSerializer(serializers.ModelSerializer):
-    
+    location = serializers.SlugRelatedField(
+        queryset=Location.objects.all(),
+        slug_field='name'
+    )
+    speciality = serializers.SlugRelatedField(
+        queryset=Speciality.objects.all(),
+        slug_field='name'
+    )
+    # TODO настроить под сериализатор skills
+    skills = serializers.ListField()
 
     class Meta:
         model = Resume
         fields = '__all__'
+    
+    def validate_skills(self, data):
+        for num_skill in range(len(data)):
+            data[num_skill], _ = Skill.objects.get_or_create(name=data[num_skill])
+        return data
 
     def to_representation(self, data):
         fields = ShowResumeSerializer(data, context=self.context)

@@ -93,7 +93,9 @@ class Speciality(models.Model):
 
 class Resume(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name='resume')
+                               related_name='resume',
+                               limit_choices_to={'is_company': False},
+                               verbose_name='Автор резюме')
     name = models.CharField(max_length=255, verbose_name='Название должности')
     location = models.ForeignKey(
         Location, on_delete=models.PROTECT, related_name='resume',
@@ -116,6 +118,7 @@ class Resume(models.Model):
                                         verbose_name='График работы')
     remote_work = models.BooleanField(default=False,
                                       verbose_name='Удаленная работа')
+    about_me = models.TextField(null=True, verbose_name='О себе')
 
     class Meta:
         verbose_name = 'Резюме'
@@ -128,6 +131,7 @@ class Resume(models.Model):
 class Vacancy(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='vacancy',
+                               limit_choices_to={'is_company': True},
                                verbose_name='Автор вакансии')
     name = models.CharField(max_length=255, verbose_name='Название вакансии')
     short_discription = models.CharField(max_length=255, blank=True,
