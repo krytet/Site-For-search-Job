@@ -33,7 +33,7 @@
                             Создать вакансию
                         </button>
                     </router-link>
-                    <router-link to="/" v-else>
+                    <router-link to="/resume/create" v-else>
                         <button>
                             Создать резюме
                         </button>
@@ -170,14 +170,13 @@ export default {
         font-family: 'Helvetica', 'Neue';
         text-decoration: none;
         cursor: pointer;
-        height: 20px;
+        height: min-content;
         width: min-content;
         transition: 0.5s;
     }
 
     button.menu-button:hover {
         background-color: #7c3aed80;
-        height: 25px;
         transition: 0.5s;
     }
 

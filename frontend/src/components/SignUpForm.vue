@@ -55,8 +55,6 @@ export default {
     methods: {
         async SignUp() {
             console.log('func SignUp');
-            console.log(this.username);
-            console.log(this.password);
             const registerData = {
                 'username': this.username ,
                 'password': this.password,
@@ -77,9 +75,10 @@ export default {
                     registerData,
                 );
                 console.log(response);
-                if (response.status == 200) {
+                if (response.status == 201) {
                     // Помещаем токен на хранение
                     console.log('Создано')
+                    this.$router.push({name: 'SignIn'})
                     // TODO сделать редерект
                 }
                 // TODO Сделать обработку ошибок

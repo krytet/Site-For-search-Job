@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Vacancy from '../views/Vacancy.vue'
 import VacancyDetail from '@/views/VacancyDetail.vue'
 import VacancyCreate from '@/views/VacancyCreate.vue'
+import ResumeCreate from '@/views/ResumeCreate.vue'
 import SingUp from '@/views/SingUp.vue'
 import SingIn from '@/views/SingIn.vue'
 import Responses from '@/views/Responses.vue'
@@ -37,6 +38,11 @@ const routes = [
     path: '/vacancy/:id',
     name: 'Vacancy-Detail',
     component: VacancyDetail
+  },
+  {
+    path: '/resume/create',
+    name: 'ResumeCreate',
+    component: ResumeCreate
   },
   {
     path: '/responses',

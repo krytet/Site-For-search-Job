@@ -1,25 +1,26 @@
 <template>
     <div class="signup">
         <div class="login-area">
-        <h1>Создание вакансии</h1>
+        <h1>Создание Резюме</h1>
 
-        <FormCreateVacancy />
+        <FormCreateResume />
+
 
         </div>
     </div>
 </template>
 
 <script>
-import FormCreateVacancy from '@/components/FormCreateVacancy'
+import FormCreateResume from '@/components/FormCreateResume'
 
 export default {
-    name: 'VacancyCreate',
+    name: 'ResumeCreate',
     data() {
         return {
         }
     },
     components: {
-        FormCreateVacancy
+        FormCreateResume,
     },
 }
 </script>

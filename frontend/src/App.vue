@@ -9,6 +9,7 @@
     <router-link to="/signup">Sign Up Reg</router-link> |
     <router-link to="/vacancy/create">Vacancy Create</router-link> |
     <router-link to="/responses">Responses</router-link> |
+    <router-link to="/resume/create">Create Resume</router-link> |
   </div>
   <router-view/>
   <Footer />
